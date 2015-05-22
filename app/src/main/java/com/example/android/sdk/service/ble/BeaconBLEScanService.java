@@ -13,20 +13,16 @@ import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.android.sdk.domain.MostraBeacon;
-import com.example.android.sdk.domain.MostraListener;
-import com.example.android.sdk.util.MostraConstants;
+import com.example.android.sdk.domain.Beacon;
+import com.example.android.sdk.domain.BeaconListener;
+import com.example.android.sdk.util.BeaconConstants;
 
-/**
- * Mostra Android SDK 2.0.1 CQ Beacon Discovery Class. Works with Android BLE library to scan and retrieve BLE devices.
- *
- * @Copyright Mostra, LLC 2014
- */
-public class MostraBLEScanService {
 
-    private static final String TAG = MostraBLEScanService.class.getSimpleName();
-    private long mScanInterval = MostraConstants.BLE_SCAN_INTERVAL;
-    private long mScanStopPeriod = MostraConstants.BLE_SCAN_STOP_AFTER_PERIOD;
+public class BeaconBLEScanService {
+
+    private static final String TAG = BeaconBLEScanService.class.getSimpleName();
+    private long mScanInterval = BeaconConstants.BLE_SCAN_INTERVAL;
+    private long mScanStopPeriod = BeaconConstants.BLE_SCAN_STOP_AFTER_PERIOD;
 
     private Context mContext = null;
     private BluetoothAdapter mBluetoothAdapter = null;
@@ -35,21 +31,21 @@ public class MostraBLEScanService {
 
     private boolean mIsInitialized = false;
 
-    private Map<String, MostraBeacon> mBeaconContainer = null;
-    private MostraListener mMostraListener = null;
+    private Map<String, Beacon> mBeaconContainer = null;
+    private BeaconListener mBeaconListener = null;
 
     /**
      * New instance of CQSearchService
      */
-    public MostraBLEScanService(Context c) {
+    public BeaconBLEScanService(Context c) {
         Log.d(TAG, String.format("CQSearchService: new instance"));
 
         mContext = c;
 
-        mBeaconContainer = new HashMap<String, MostraBeacon>();
+        mBeaconContainer = new HashMap<String, Beacon>();
     }
 
-    public Map<String, MostraBeacon> getBeacons() {
+    public Map<String, Beacon> getBeacons() {
         Log.d(TAG, String.format("getBeacons: Total=%d", mBeaconContainer.size()));
         return mBeaconContainer;
     }
@@ -57,8 +53,8 @@ public class MostraBLEScanService {
     /**
      * Initializes the service
      */
-    public void initialize(MostraListener a) {
-        mMostraListener = a;
+    public void initialize(BeaconListener a) {
+        mBeaconListener = a;
         mIsInitialized = true;
 
         final BluetoothManager bluetoothManager = (BluetoothManager) mContext.getSystemService(Context.BLUETOOTH_SERVICE);
@@ -72,11 +68,11 @@ public class MostraBLEScanService {
     public void startScan() {
         if (!mIsInitialized) {
             Log.e(TAG, "BLE Scan Service hasn't been initialized..make sure to call CQBLEScanService.initialize prior to this call.");
-            Toast.makeText(mContext, MostraConstants.BLE_NOT_INITIALIZED, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, BeaconConstants.BLE_NOT_INITIALIZED, Toast.LENGTH_SHORT).show();
             return;
         }
 
-        mBeaconContainer = new HashMap<String, MostraBeacon>();
+        mBeaconContainer = new HashMap<String, Beacon>();
         mCountDownCounterSeconds = (int) mScanInterval / 1000;
         if (mBLEScanThread == null) {
             mBLEScanThread = new BLEScanThread();
@@ -96,7 +92,7 @@ public class MostraBLEScanService {
     public void stopLeScan() {
         if (!mIsInitialized) {
             Log.e(TAG, "BLE Scan Service hasn't been initialized..make sure to call CQBLEScanService.initialize prior to this call.");
-            Toast.makeText(mContext, MostraConstants.BLE_NOT_INITIALIZED, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, BeaconConstants.BLE_NOT_INITIALIZED, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -110,12 +106,12 @@ public class MostraBLEScanService {
     public void startLeScan() {
         if (!mIsInitialized) {
             Log.e(TAG, "BLE Scan Service hasn't been initialized..make sure to call CQBLEScanService.initialize prior to this call.");
-            Toast.makeText(mContext, MostraConstants.BLE_NOT_INITIALIZED, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, BeaconConstants.BLE_NOT_INITIALIZED, Toast.LENGTH_SHORT).show();
             return;
         }
 
         // init the hashmap
-        mBeaconContainer = new HashMap<String, MostraBeacon>();
+        mBeaconContainer = new HashMap<String, Beacon>();
 
         // stop the scan
         mBluetoothAdapter.startLeScan(mLeScanCallback);
@@ -130,7 +126,7 @@ public class MostraBLEScanService {
             return;
         }
         ArrayList<String> scanData = ScanRecodeParsing(scanRecord);
-        MostraBeacon beacon = new MostraBeacon();
+        Beacon beacon = new Beacon();
 
         //beacon.setAddress(device.getAddress());
         //beacon.setName(device.getName());
@@ -150,7 +146,7 @@ public class MostraBLEScanService {
             Log.d(TAG, String.format("Found BLE Device=%s @ %d", identifier, rssi));
             mBeaconContainer.put(identifier, beacon);
             // call the listener and pass Generic Beacon info
-            mMostraListener.handleGenericBeaconDiscovery(beacon);
+            mBeaconListener.handleGenericBeaconDiscovery(beacon);
         }
     }
 

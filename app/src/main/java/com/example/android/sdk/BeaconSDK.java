@@ -4,31 +4,27 @@ package com.example.android.sdk;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.android.sdk.domain.MostraListener;
-import com.example.android.sdk.service.ble.MostraBLEScanService;
+import com.example.android.sdk.domain.BeaconListener;
+import com.example.android.sdk.service.ble.BeaconBLEScanService;
 
-/**
- * Mostra Android SDK 2.0.1 Provides access to ConnectQuest Beacon Discovery
- *
- * @Copyright Mostra, LLC 2014
- */
-public class MostraSDK {
 
-    private final String TAG = MostraSDK.class.getSimpleName();
-    private MostraListener mListener = null;
+public class BeaconSDK {
+
+    private final String TAG = BeaconSDK.class.getSimpleName();
+    private BeaconListener mListener = null;
     private Context mContext = null;
-    private MostraBLEScanService mScanService = null;
+    private BeaconBLEScanService mScanService = null;
 
     /**
      * Initializes the SDK
      *
      * @param listener Listener using the SDK
      */
-    public MostraSDK(MostraListener listener) {
+    public BeaconSDK(BeaconListener listener) {
         setmContext(listener.getContext());
         mListener = listener;
         //instantiate the scanner
-        mScanService = new MostraBLEScanService(mListener.getContext());
+        mScanService = new BeaconBLEScanService(mListener.getContext());
         mScanService.initialize(listener);
     }
 

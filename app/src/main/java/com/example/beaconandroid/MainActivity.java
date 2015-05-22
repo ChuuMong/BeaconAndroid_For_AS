@@ -9,17 +9,15 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.android.sdk.MostraSDK;
-import com.example.android.sdk.domain.MostraBeacon;
-import com.example.android.sdk.domain.MostraListener;
-import com.example.model.Beacon;
+import com.example.android.sdk.BeaconSDK;
+import com.example.android.sdk.domain.Beacon;
+import com.example.android.sdk.domain.BeaconListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +27,7 @@ public class MainActivity extends Activity {
 
     private static final int REQUEST_ENABLE_BT = 1;
 
-    private MostraSDK mMostraSDK;
+    private BeaconSDK mBeaconSDK;
     private BluetoothAdapter mBluetoothAdapter;
 
     private ListView mListView;
@@ -37,7 +35,7 @@ public class MainActivity extends Activity {
     public BeaconListView mAdapter;
     public ArrayList<String> beaconList;
 
-    public List<Beacon> listData;
+    public List<com.example.model.Beacon> listData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +63,8 @@ public class MainActivity extends Activity {
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
         }
 
-        beaconList = new ArrayList<>();
-        listData = new ArrayList<>();
+        beaconList = new ArrayList<String>();
+        listData = new ArrayList<com.example.model.Beacon>();
 
         mAdapter = new BeaconListView(this, listData);
         mListView.setAdapter(mAdapter);
@@ -79,15 +77,15 @@ public class MainActivity extends Activity {
         // TODO 자동 생성된 메소드 스텁
         super.onResume();
         if (mBluetoothAdapter.isEnabled()) {
-            mMostraSDK = new MostraSDK(mSDKListener);
-            mMostraSDK.startDiscovery();
+            mBeaconSDK = new BeaconSDK(mSDKListener);
+            mBeaconSDK.startDiscovery();
         }
     }
 
-    private MostraListener mSDKListener = new MostraListener() {
+    private BeaconListener mSDKListener = new BeaconListener() {
 
         @Override
-        public void handleGenericBeaconDiscovery(MostraBeacon beacon) {
+        public void handleGenericBeaconDiscovery(Beacon beacon) {
             if (beacon == null) {
                 return;
             }
@@ -117,7 +115,7 @@ public class MainActivity extends Activity {
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals("com.example.beaconandroid.BeaconBroadCast")) {
                 if (di != null) {
-                    final Beacon beacon = di.getBeacon();
+                    final com.example.model.Beacon beacon = di.getBeacon();
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -139,7 +137,7 @@ public class MainActivity extends Activity {
         }
     };
 
-    public void setListViewData(MostraBeacon beacon) {
+    public void setListViewData(Beacon beacon) {
         di = new DummyItem(this, beacon.getUUID());
         di.startBeaconDataFromServer();
     }

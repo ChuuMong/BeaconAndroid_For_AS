@@ -4,29 +4,16 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Mostra Android SDK 2.0.1 BLE Beacon: contains information about BLE beacons
- *
- * @Copyright Mostra, LLC 2014
- */
-public class MostraBeacon {
 
-    private final String TAG = MostraBeacon.class.getSimpleName();
+public class Beacon {
+
+    private final String TAG = Beacon.class.getSimpleName();
     private String trueName, name, address, identifier, btClass, manufacturer, major, minor, uuids;
     private Date dateDiscovered;
     private int rssi;
-    boolean isCQBLE = true;
 
-    public MostraBeacon() {
+    public Beacon() {
 
-    }
-
-    public void setIsCQBLE(boolean n) {
-        isCQBLE = n;
-    }
-
-    public boolean getIsCQBLE() {
-        return isCQBLE;
     }
 
     public void setRSSI(int i) {

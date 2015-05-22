@@ -1,11 +1,6 @@
 package com.example.android.sdk.util;
 
-/**
- * Mostra Android SDK 2.0.1 SDK Constants Definitions
- *
- * @Copyright Mostra, LLC 2014
- */
-public class MostraConstants {
+public class BeaconConstants {
 
     /**
      * Perform scan seconds
