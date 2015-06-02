@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.beaconandroid">
+          package="com.example.view">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -12,7 +12,7 @@
             android:label="@string/app_name"
             android:theme="@style/CustomActionBarTheme">
         <activity
-                android:name=".LodingActivity"
+                android:name="com.example.activity.LodingActivity"
                 android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,33 +21,33 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".MainActivity"
+                android:name="com.example.activity.MainActivity"
                 android:label="@string/activity_name"
                 android:icon="@drawable/titlebar_log"
                 android:theme="@style/CustomActionBarTheme2" >
         </activity>
         <activity
-                android:name=".ReloadActivity"
+                android:name="com.example.activity.ReloadActivity"
                 android:label="@string/activity_name"
                 android:icon="@drawable/titlebar_log" >
         </activity>
         <activity
-                android:name=".ImageTouchActivity"
+                android:name="com.example.activity.ImageTouchActivity"
                 android:label="@string/activity_name"
                 android:icon="@drawable/titlebar_log" >
         </activity>
         <activity
-                android:name=".ReloadImageNullActivity"
+                android:name="com.example.activity.ReloadImageNullActivity"
                 android:label="@string/activity_name"
                 android:icon="@drawable/titlebar_log" >
         </activity>
         <activity
-                android:name=".IntroActivity"
+                android:name="com.example.activity.IntroActivity"
                 android:label="@string/activity_name"
                 android:icon="@drawable/titlebar_log" >
         </activity>
         <activity
-                android:name=".GalleryAcitiviy"
+                android:name="com.example.activity.GalleryAcitiviy"
                 android:label="@string/activity_name"
                 android:icon="@drawable/titlebar_log" >
         </activity>

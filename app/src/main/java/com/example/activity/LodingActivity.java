@@ -6,7 +6,7 @@
  * @author : JongHun Lee
  * @Contect :
  */
-package com.example.beaconandroid;
+package com.example.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,6 +14,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.Window;
+
+import com.example.view.R;
 
 public class LodingActivity extends Activity {
 

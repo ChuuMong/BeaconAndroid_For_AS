@@ -1,4 +1,4 @@
-package com.example.beaconandroid;
+package com.example.beacon;
 
 import com.google.gson.Gson;
 

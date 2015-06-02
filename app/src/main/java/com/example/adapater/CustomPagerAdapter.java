@@ -1,14 +1,14 @@
-package com.example.beaconandroid;
+package com.example.adapater;
 
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 
+import com.example.activity.ImageTouchActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

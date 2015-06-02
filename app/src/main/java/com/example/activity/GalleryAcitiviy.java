@@ -6,7 +6,7 @@
  * @author : JongHun Lee
  * @Contect :
  */
-package com.example.beaconandroid;
+package com.example.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -16,6 +16,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+
+import com.example.view.R;
 
 /**
  * @author Hoom

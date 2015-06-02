@@ -1,4 +1,4 @@
-package com.example.beaconandroid;
+package com.example.activity;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -15,9 +15,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.android.sdk.BeaconSDK;
-import com.example.android.sdk.domain.Beacon;
-import com.example.android.sdk.domain.BeaconListener;
+import com.example.beacon.domain.Beacon;
+import com.example.beacon.domain.BeaconListener;
+import com.example.beacon.service.BeaconBLEScanService;
+import com.example.view.BeaconListView;
+import com.example.beacon.DummyItem;
+import com.example.view.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +30,7 @@ public class MainActivity extends Activity {
 
     private static final int REQUEST_ENABLE_BT = 1;
 
-    private BeaconSDK mBeaconSDK;
+    private BeaconBLEScanService mBeaconService;
     private BluetoothAdapter mBluetoothAdapter;
 
     private ListView mListView;
@@ -63,8 +66,8 @@ public class MainActivity extends Activity {
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
         }
 
-        beaconList = new ArrayList<String>();
-        listData = new ArrayList<com.example.model.Beacon>();
+        beaconList = new ArrayList<>();
+        listData = new ArrayList<>();
 
         mAdapter = new BeaconListView(this, listData);
         mListView.setAdapter(mAdapter);
@@ -77,8 +80,8 @@ public class MainActivity extends Activity {
         // TODO 자동 생성된 메소드 스텁
         super.onResume();
         if (mBluetoothAdapter.isEnabled()) {
-            mBeaconSDK = new BeaconSDK(mSDKListener);
-            mBeaconSDK.startDiscovery();
+            mBeaconService = new BeaconBLEScanService(this, mSDKListener);
+            mBeaconService.startScan();
         }
     }
 
@@ -90,22 +93,18 @@ public class MainActivity extends Activity {
                 return;
             }
 
-            if (beacon.getRSSI() > -70) {
+            if (beacon.getRssi() > -70) {
                 for (int i = 0; i < beaconList.size(); i++) {
-                    if (beaconList.get(i).equals(beacon.getUUID())) {
+                    if (beaconList.get(i).equals(beacon.getUuids())) {
                         return;
                     }
                 }
-                beaconList.add(beacon.getUUID().trim());
-                Log.i("MainActivity", beacon.getUUID().trim());
+                beaconList.add(beacon.getUuids().trim());
+                Log.i("MainActivity", beacon.getUuids().trim());
                 setListViewData(beacon);
             }
         }
 
-        @Override
-        public Context getContext() {
-            return getApplicationContext();
-        }
     };
 
     DummyItem di;
@@ -138,7 +137,7 @@ public class MainActivity extends Activity {
     };
 
     public void setListViewData(Beacon beacon) {
-        di = new DummyItem(this, beacon.getUUID());
+        di = new DummyItem(this, beacon.getUuids());
         di.startBeaconDataFromServer();
     }
 }

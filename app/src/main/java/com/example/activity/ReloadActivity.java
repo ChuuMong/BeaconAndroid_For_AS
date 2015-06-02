@@ -6,12 +6,15 @@
  * @author : JongHun Lee
  * @Contect :
  */
-package com.example.beaconandroid;
+package com.example.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.widget.TextView;
+
+import com.example.adapater.CustomPagerAdapter;
+import com.example.view.R;
 
 import java.util.ArrayList;
 import java.util.List;

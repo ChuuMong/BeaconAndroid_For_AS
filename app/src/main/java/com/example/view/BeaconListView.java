@@ -1,6 +1,5 @@
-package com.example.beaconandroid;
+package com.example.view;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -11,11 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.activity.ReloadActivity;
+import com.example.activity.ReloadImageNullActivity;
+import com.example.adapater.CustomPagerAdapter;
 import com.example.model.Beacon;
 
 public class BeaconListView extends BaseAdapter {
